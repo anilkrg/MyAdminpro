@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using MyAdminpro.Models.Repository.Services;
 using Microsoft.Identity.Client;
 using MyAdminpro.Models.Repository.Intreface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MyAdminpro
 {
@@ -30,6 +31,10 @@ namespace MyAdminpro
         {
             services.AddControllersWithViews();
             DbConnection.ConnectionStr = Configuration.GetConnectionString("conn");
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+         .AddCookie();
+
 
             //inject services
             services.AddTransient<IUsers, AccountService>();
@@ -54,6 +59,7 @@ namespace MyAdminpro
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
