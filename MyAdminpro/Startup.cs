@@ -9,6 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MyAdminpro.Models.Repository.Services;
+using Microsoft.Identity.Client;
+using MyAdminpro.Models.Repository.Intreface;
 
 namespace MyAdminpro
 {
@@ -26,6 +30,11 @@ namespace MyAdminpro
         {
             services.AddControllersWithViews();
             DbConnection.ConnectionStr = Configuration.GetConnectionString("conn");
+
+            //inject services
+            services.AddTransient<IUsers, AccountService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

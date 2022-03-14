@@ -12,9 +12,7 @@ namespace MyAdminpro.Models
        public MSDBContext() : base() { }
 
         public DbSet<Tbl_Users> Tbl_Users { get; set; }
-        public DbSet<VerifyAccount> verifyAccounts { get; set; }
-
-        
+        public DbSet<VerifyAccount> VerifyAccounts { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(DbConnection.ConnectionStr);

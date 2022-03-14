@@ -6,11 +6,10 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\site.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Repository\Intreface\" />
-    <Folder Include="Models\Repository\Services\" />
+    <None Include="wwwroot\plugins\sweetalert2\sweetalert2.all.js" />
+    <None Include="wwwroot\plugins\sweetalert2\sweetalert2.all.min.js" />
+    <None Include="wwwroot\plugins\sweetalert2\sweetalert2.js" />
+    <None Include="wwwroot\plugins\sweetalert2\sweetalert2.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +19,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.42.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.28" />
   </ItemGroup>
 
 </Project>
