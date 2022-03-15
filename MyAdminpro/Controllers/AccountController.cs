@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace MyAdminpro.Controllers
 {
@@ -26,13 +28,28 @@ namespace MyAdminpro.Controllers
 
         [HttpPost]
 
-        public IActionResult Login(SignInModel model)
+        public async Task<IActionResult> Login(SignInModel model)
         {
             if(ModelState.IsValid)
             {
                 var result = UserService.SignIn(model);
                 if(result==SignInEnum.Sucess)
                 {
+
+                    var claims = new List<Claim>() {
+                   
+                        new Claim(ClaimTypes.Name, model.Email),
+                      
+                };
+                    //Initialize a new instance of the ClaimsIdentity with the claims and authentication scheme    
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    //Initialize a new instance of the ClaimsPrincipal with ClaimsIdentity    
+                    var principal = new ClaimsPrincipal(identity);
+                    //SignInAsync is a Extension method for Sign in a principal for the specified scheme.    
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
+                    {
+                        IsPersistent = model.RememberMe
+                    });
                     return RedirectToAction("Index", "Home");
                 }
                 else if(result==SignInEnum.WrongCredentials)
@@ -52,6 +69,12 @@ namespace MyAdminpro.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }
