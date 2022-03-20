@@ -11,6 +11,7 @@ namespace MyAdminpro.Models.Repository.Intreface
     {
         SignInEnum SignIn(SignInModel model);
         SignUpEnum SignUp(SignUpModel model);
+        bool VerifyAccount(string Otp);
 
     }
 }

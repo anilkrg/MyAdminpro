@@ -76,5 +76,68 @@ namespace MyAdminpro.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+        public IActionResult Register() 
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult Register(SignUpModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var result = UserService.SignUp(model);
+                if (result == SignUpEnum.Sucess)
+                {
+                    return RedirectToAction("VerifyAccount");
+                }
+                else if (result == SignUpEnum.EmailExist)
+                {
+                    ModelState.AddModelError(string.Empty, "Email already exist, plz try another !");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Somthing went Wrong !");
+
+                }
+            }
+            return View(model);
+
+        }
+
+               
+        public IActionResult VerifyAccount()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        public IActionResult VerifyAccount(string Otp)
+        {
+            if (Otp != null)
+            {
+                if (UserService.VerifyAccount(Otp))
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "please Enter correct OTP");
+
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "please Enter OTP");
+            }
+            return View();
+        }
+
+
     }
+
+
 }
+

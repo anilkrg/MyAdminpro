@@ -19,7 +19,7 @@ namespace MyAdminpro.ViewModel
         [Required]
         public string Password { get; set; }
         [Required]
-        [Compare("Password",ErrorMessage ="password")]
+        [Compare("Password",ErrorMessage ="Password Mismatch")]
         public string ConfirmPassword { get; set; }
         public string Gender { get; set; }
         
